@@ -207,7 +207,6 @@ func TestParseBestEffort(t *testing.T) {
 	f("--", 0)
 	f("-.", 0)
 	f("-.e", 0)
-	f("+112", 0)
 	f("++", 0)
 	f("e123", 0)
 	f("E123", 0)
@@ -242,6 +241,7 @@ func TestParseBestEffort(t *testing.T) {
 	f("-0", 0)
 	f("0123", 123)
 	f("-00123", -123)
+	f("+112", 112)
 	f("1", 1)
 	f("-1", -1)
 	f("1234567890123456", 1234567890123456)
@@ -261,6 +261,7 @@ func TestParseBestEffort(t *testing.T) {
 	f("0.3", 0.3)
 	f("-0.1", -0.1)
 	f("-0.123", -0.123)
+	f("+0.123", +0.123)
 	f("1.66", 1.66)
 	f("12345.12345678901", 12345.12345678901)
 	f("12345.123456789012", 12345.123456789012)
@@ -340,7 +341,6 @@ func TestParseFailure(t *testing.T) {
 	f("--")
 	f("-.")
 	f("-.e")
-	f("+112")
 	f("++")
 	f("e123")
 	f("E123")
@@ -393,6 +393,7 @@ func TestParseSuccess(t *testing.T) {
 	f("-0", 0)
 	f("0123", 123)
 	f("-00123", -123)
+	f("+112", 112)
 	f("1", 1)
 	f("-1", -1)
 	f("1234567890123456", 1234567890123456)
@@ -472,6 +473,9 @@ func TestParseBestEffortFuzz(t *testing.T) {
 	for i := 0; i < 100000; i++ {
 		f := r.Float64()
 		s := strconv.FormatFloat(f, 'g', -1, 64)
+		if r.Float64() > 0.5 {
+			s = "+" + s
+		}
 		numExpected, err := strconv.ParseFloat(s, 64)
 		if err != nil {
 			t.Fatalf("unexpected error when parsing %q: %s", s, err)
@@ -488,6 +492,9 @@ func TestParseFuzz(t *testing.T) {
 	for i := 0; i < 100000; i++ {
 		f := r.Float64()
 		s := strconv.FormatFloat(f, 'g', -1, 64)
+		if r.Float64() > 0.5 {
+			s = "+" + s
+		}
 		numExpected, err := strconv.ParseFloat(s, 64)
 		if err != nil {
 			t.Fatalf("unexpected error when parsing %q: %s", s, err)
