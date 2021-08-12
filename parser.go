@@ -2,10 +2,11 @@ package fastjson
 
 import (
 	"fmt"
-	"github.com/valyala/fastjson/fastfloat"
 	"strconv"
 	"strings"
 	"unicode/utf16"
+
+	"github.com/valyala/fastjson/fastfloat"
 )
 
 // Parser parses JSON.
@@ -839,6 +840,13 @@ func (v *Value) GetStringBytes(keys ...string) []byte {
 		return nil
 	}
 	return s2b(v.s)
+}
+
+// S returns raw string value of v as is is.
+//
+// The returned string is valid until Parse is called on the Parser returned v.
+func (v *Value) S() string {
+	return v.s
 }
 
 // GetBool returns bool value by the given keys path.
