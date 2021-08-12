@@ -842,11 +842,9 @@ func (v *Value) GetStringBytes(keys ...string) []byte {
 	return s2b(v.s)
 }
 
-// S returns raw string value of v as is is.
-//
-// The returned string is valid until Parse is called on the Parser returned v.
+// S returns a copy of a raw string value of v as it is.
 func (v *Value) S() string {
-	return v.s
+	return string(s2b(v.s))
 }
 
 // GetBool returns bool value by the given keys path.
