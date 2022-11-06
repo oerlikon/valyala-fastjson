@@ -96,8 +96,8 @@ func ParseInt64BestEffort(s string) int64 {
 	if len(s) == 0 {
 		return 0
 	}
-	i, minus, plus := uint(0), s[0] == '-', s[0] == '+'
-	if minus || plus {
+	i, minus := uint(0), s[0] == '-'
+	if minus || s[0] == '+' {
 		i++
 		if i >= uint(len(s)) {
 			return 0
@@ -145,8 +145,8 @@ func ParseInt64(s string) (int64, error) {
 	if len(s) == 0 {
 		return 0, fmt.Errorf("cannot parse int64 from empty string")
 	}
-	i, minus, plus := uint(0), s[0] == '-', s[0] == '+'
-	if minus || plus {
+	i, minus := uint(0), s[0] == '-'
+	if minus || s[0] == '+' {
 		i++
 		if i >= uint(len(s)) {
 			return 0, fmt.Errorf("cannot parse int64 from %q", s)
@@ -202,8 +202,8 @@ func ParseBestEffort(s string) float64 {
 	if len(s) == 0 {
 		return 0
 	}
-	i, minus, plus := uint(0), s[0] == '-', s[0] == '+'
-	if minus || plus {
+	i, minus := uint(0), s[0] == '-'
+	if minus || s[0] == '+' {
 		i++
 		if i >= uint(len(s)) {
 			return 0
@@ -351,8 +351,8 @@ func Parse(s string) (float64, error) {
 	if len(s) == 0 {
 		return 0, fmt.Errorf("cannot parse float64 from empty string")
 	}
-	i, minus, plus := uint(0), s[0] == '-', s[0] == '+'
-	if minus || plus {
+	i, minus := uint(0), s[0] == '-'
+	if minus || s[0] == '+' {
 		i++
 		if i >= uint(len(s)) {
 			return 0, fmt.Errorf("cannot parse float64 from %q", s)
